@@ -1,0 +1,20 @@
+# fly.toml file generated for birdnest-db on 2022-12-21T12:38:49+02:00
+
+app = "birdnest-db"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  internal_port = 5432 # Postgres instance
+  protocol = "tcp"
+
+[[services.ports]]
+  handlers = ["pg_tls"]
+  port = 5432
