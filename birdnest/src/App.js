@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { parse } from 'fast-xml-parser';
-import Violator from './components/Violator';
+import Violator from './components/Violator.jsx';
 
 function App() {
   const [drones, setDrones] = useState([]);
 
   const droneHook = () => {
-    fetch(`http://localhost:7777/drones`)
+    fetch(`https://birdnest-api.fly.dev/drones`)
     .then(response => response.json())
     .then(data => {setDrones(data)
       console.log("fetch")
@@ -14,7 +13,7 @@ function App() {
   }
 
 useEffect(() => {
-  setInterval(function() {
+  setInterval( () => {
   droneHook()}, 10000)
 }, [])
 
@@ -22,10 +21,11 @@ useEffect(() => {
     <div
     >
       {drones.map(drone => 
-      <Violator
-      key={drone.serialNumber}
-      drone={drone}
-      ></Violator>)}
+        <Violator
+          key={drone.serialnumber + '@' + drone.timestamp}
+          drone={drone}>
+        </Violator>
+      )}
     </div>
   );
 }

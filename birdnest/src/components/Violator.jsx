@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import violatorStyles from '../styles/violatorStyles';
 
 function Violator({drone}) {
 
@@ -6,7 +7,7 @@ function Violator({drone}) {
 
   const violatorHook = () => {
     try {
-    fetch(`http://localhost:7777/violators/${drone.serialnumber}`, {
+    fetch(`https://birdnest-api.fly.dev/violators/${drone.serialnumber}`, {
        // mode: 'no-cors'
     })
     .then(response => response.json())
@@ -43,25 +44,24 @@ useEffect(() => {
 }, []) 
 
   return (
-    <div
-    style={{margin: '10px', padding: '10px', fontWeight: 'bold', backgroundColor: '#7ad158', borderRadius: '20px', display: 'flex', flexDirection: 'row'}}>
-      <div style ={{ width: '50%', display: 'flex', alignItems: 'center'}}>
-      <p style={{color: '#363636'}}>
-      Name: {violator.firstName} {violator.lastName}
-      <br></br>
-      Email: {violator.email}
-      <br></br>
-      Phone number: {violator.phoneNumber}
-      <br></br>
-      </p>
+    <div key={violator.pilotId} style={violatorStyles.violatorBackground}>
+      <div style={violatorStyles.contactInfoBox}>
+        <p style={violatorStyles.contactInfoColoring}>
+          Name: {violator.firstName} {violator.lastName}
+          <br></br>
+          Email: {violator.email}
+          <br></br>
+          Phone number: {violator.phoneNumber}
+          <br></br>
+        </p>
       </div>
-      <div style={{width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'end'}}>
-      <div style={{width: '100px', height:'100px', borderRadius:'50px', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36}}>
-      <p style={{color: 'red'}}>
-      {drone.distance} m
-      </p>
-      </div>
-      <br></br>
+      <div style={violatorStyles.distanceBox}>
+        <div style={violatorStyles.distanceCircle}>
+          <p style={violatorStyles.distanceColoring}>
+            {drone.distance} m
+          </p>
+        </div>
+        <br></br>
       </div>
     </div>
   );
