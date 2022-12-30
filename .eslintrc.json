@@ -1,0 +1,24 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["airbnb"],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "no-else-return": "off",
+        "prefer-destructuring": "off",
+        "prefer-const": "off",
+        "radix": "off",
+        "no-console": "off",
+        "padded-blocks": "off"
+    }
+}
