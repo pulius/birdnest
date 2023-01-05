@@ -1,32 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import violatorStyles from '../styles/violatorStyles';
 
-function Violator({drone}) {
+const Violator = ({drone}) => {
 
   const [violator, setViolator] = useState({});
 
-  const violatorHook = () => {
-    try {
-    fetch(`https://birdnest-api.fly.dev/violators/${drone.serialnumber}`, {
-       // mode: 'no-cors'
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 200) {
-        // console.log(JSON.parse(data.violator).violator)
-        setViolator(JSON.parse(data.violator).violator)
-      } else {
-        setViolator({
-          "pilotId": "unavailable",
-          "firstName": "unavailable",
-          "lastName": "unavailable",
-          "phoneNumber": "unavailable",
-          "createdDt": "unavailable",
-          "email": "unavailable"
-        })
-      }
-  })
-  } catch {
+  const onFetchFailed = () => {
     setViolator({
       "pilotId": "unavailable",
       "firstName": "unavailable",
@@ -34,14 +13,30 @@ function Violator({drone}) {
       "phoneNumber": "unavailable",
       "createdDt": "unavailable",
       "email": "unavailable"
-    })
-    console.log(`Unable to fetch ${drone.serialnumber}`)
-  }
+    });
   }
 
-useEffect(() => {
-  violatorHook();
-}, []) 
+  const violatorHook = () => {
+    try {
+      fetch(`http://localhost:7777/violators/${drone.serialnumber}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 200) {
+          setViolator(JSON.parse(data.violator).violator)
+        } else {
+          onFetchFailed();
+          console.log(`Unable to fetch ${drone.serialnumber}`)
+        }
+      });
+    } catch (err) {
+      onFetchFailed();
+      console.log('Error from backend: ' + err);
+    }
+  }
+
+  useEffect(() => {
+    violatorHook();
+  }, []); 
 
   return (
     <div key={violator.pilotId} style={violatorStyles.violatorBackground}>

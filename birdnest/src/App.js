@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Violator from './components/Violator.jsx';
 
-function App() {
+const App = () => {
   const [drones, setDrones] = useState([]);
 
   const droneHook = () => {
     fetch(`https://birdnest-api.fly.dev/drones`)
     .then(response => response.json())
-    .then(data => {setDrones(data)
-      console.log("fetch")
-  })
+    .then(data => { 
+      setDrones(data);
+    });
   }
 
-useEffect(() => {
-  setInterval( () => {
-  droneHook()}, 10000)
-}, [])
+  useEffect(() => { // Initial fetch
+    droneHook();
+  }, []);
+
+  useEffect(() => { // Periodic fetch every 10 seconds
+    setInterval(() => {
+      droneHook();
+    }, 10000);
+  }, []);
 
   return (
     <div
