@@ -18,7 +18,7 @@ const Violator = ({drone}) => {
 
   const violatorHook = () => {
     try {
-      fetch(`http://localhost:7777/violators/${drone.serialnumber}`)
+      fetch(`https://birdnest-api.fly.dev/violators/${drone.serialnumber}`)
       .then(response => response.json())
       .then(data => {
         if (data.status === 200) {
