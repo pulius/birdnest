@@ -94,7 +94,7 @@ const deleteDrones = async (): Promise<void> => {
     await client.queryObject(queryString);
   });
   await client.release();
-}; 
+};
 
 router.get('/drones', async (ctx) => {
   try {
@@ -133,7 +133,7 @@ app.use(router.allowedMethods());
 
 app.listen({ port: 7777 });
 
-console.log('listening on port 7777');
+console.log('ts app listening on port 7777');
 
 setInterval(() => {
   fetchDrones();
