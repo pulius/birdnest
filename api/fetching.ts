@@ -1,16 +1,17 @@
 import { parse } from "https://deno.land/x/xml/mod.ts";
+import { FullData, ViolatorResponse } from "./types.ts";
 
-const getDrones = async (): Promise<string> => {
+const getDrones = async (): Promise<FullData> => {
   const response = await fetch("http://assignments.reaktor.com/birdnest/drones", {
       method: "GET",
       headers: {
         "Content-Type": "application/xml",
       },
     });
-  return parse(await response.text());
+  return JSON.parse(JSON.stringify(parse(await response.text())));
 }
 
-const getViolators = async (serialNumber: string): Promise<Object> => {
+const getViolators = async (serialNumber: string): Promise<ViolatorResponse> => {
   try {
       const response = await fetch(`http://assignments.reaktor.com/birdnest/pilots/${serialNumber}`, {
         method: "GET",
