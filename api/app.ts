@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Application, Router } from 'https://deno.land/x/oak@v11.1.0/mod.ts';
 import { oakCors } from 'https://deno.land/x/cors@v1.2.2/mod.ts';
 import { Pool } from 'https://deno.land/x/postgres@v0.17.0/mod.ts';
@@ -74,7 +73,7 @@ const fetchDrones = async (): Promise<void> => {
   });
 };
 
-const deleteDrones = async (): Promise<void> => {
+const deleteDrones = async (): Promise<void> => { // Delete old drones from db to allocate space
   const client = await connectionPool.connect();
   const allDronesFromDBQuery = 'SELECT * FROM drones;';
   const allDronesFromDB: dbRows = await client.queryObject(allDronesFromDBQuery);
@@ -94,6 +93,7 @@ const deleteDrones = async (): Promise<void> => {
     await client.queryObject(queryString);
   });
   await client.release();
+  console.log(`Deleted drones before ${new Date(currentTime - 1000 * 60 * 60 * 6)}`)
 };
 
 router.get('/drones', async (ctx) => {
