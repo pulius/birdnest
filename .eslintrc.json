@@ -3,7 +3,11 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["airbnb"],
+    "extends": [
+        "airbnb",
+        "eslint:recommended", 
+        "plugin:@typescript-eslint/recommended"
+    ],
     "overrides": [
     ],
     "parserOptions": {
@@ -11,13 +15,14 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "@typescript-eslint"
     ],
     "rules": {
+        "linebreak-style": ["warning", "windows"],
         "no-else-return": "off",
-        "prefer-destructuring": "off",
-        "prefer-const": "off",
         "radix": "off",
+        "prefer-destructuring": "off",
         "no-console": "off",
         "padded-blocks": "off"
     }
