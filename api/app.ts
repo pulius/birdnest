@@ -63,7 +63,7 @@ const fetchDrones = async (): Promise<void> => {
         await client.queryObject(updateWithDistanceQuery);
       }
 
-      await client.release(); // pois tämä, käytä yhtä?
+      await client.release();
 
     } else { // If there is no previous entry for the drone, create a new one
       const insertQuery = `INSERT INTO drones ("serialnumber", "distance", "lastseen" ) VALUES ('${serialNumber}', '${distance}', '${timestamp}');`;
